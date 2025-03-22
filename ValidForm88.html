@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Form</title>
+    <script>
+        // Function to check if an input field is empty
+        function checknull(txt) {
+            return txt.value.trim().length === 0;
+        }
+
+        // Main function to validate the form
+        function validform(f) {
+
+            // Validate Fullname (must not be empty)
+            if (checknull(f.fullname)) {
+                alert("Fullname must not be empty");
+                f.fullname.focus();
+                return false;
+            }
+
+            // Validate Age (must be a number, integer, and between 1 and 199)
+            if (checknull(f.age)) {
+                alert("Age must not be empty");
+                f.age.focus();
+                return false;
+            }
+            if (isNaN(f.age.value)) {
+                alert("Age must be a number");
+                f.age.value = "";
+                f.age.focus();
+                return false;
+            }
+            if (!isInteger(f.age)) {
+                alert("Age must be an integer number");
+                f.age.value = "";
+                f.age.focus();
+                return false;
+            }
+            let ageValue = parseInt(f.age.value);
+            if (ageValue <= 0 || ageValue >= 200) {
+                alert("Age must be between 1 and 199");
+                f.age.value = "";
+                f.age.focus();
+                return false;
+            }
+
+            // Validate Gender (at least one radio button must be selected)
+            if (notCheck(f.gender)) {
+                alert("Gender must be selected");
+                return false;
+            }
+
+            // Validate Phone number (using a regex pattern)
+            if (checknull(f.phone)) {
+                alert("Phone number must not be empty");
+                f.phone.focus();
+                return false;
+            }
+            if (!StringMatch(f.phone, /^\(\d{2,4}\)[\s.-]\d{3}[\s.-]\d{3}$/)) {
+                alert("Phone number is not valid. Format: (XXX) XXX-XXX");
+                return false;
+            }
+
+            // If all validations pass, submit the form
+            alert("Form submitted successfully!");
+            return true;
+        }
+
+        // Function to check if the input matches the regular expression
+        function StringMatch(txt, reg) {
+            return reg.test(txt.value);
+        }
+
+        // Function to check if any radio button is selected
+        function notCheck(radio) {
+            let isChecked = false;
+            for (let i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            return !isChecked;
+        }
+
+        // Function to check if the value is an integer
+        function isInteger(txt) {
+            let parsedValue = parseInt(txt.value);
+            return Number.isInteger(parsedValue);
+        }
+    </script>
+</head>
+<body>
+
+    <form name="frmAccount" method="POST" onsubmit="return validform(document.forms.frmAccount)">
+        <label for="fullname">Fullname:</label>
+        <input type="text" name="fullname" /><br>
+
+        <label for="age">Age:</label>
+        <input type="text" name="age" /><br>
+
+        <label for="gender">Gender:</label>
+        <input type="radio" name="gender" value="Male" /> Male
+        <input type="radio" name="gender" value="Female" /> Female <br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" /><br>
+
+        <input type="submit" value="Submit" />
+    </form>
+
+</body>
+</html>
