@@ -59,21 +59,18 @@
                 return false;
             }
             if (!StringMatch(f.phone, /^\(\d{2,4}\)[\s.-]\d{3}[\s.-]\d{3}$/)) {
-                alert("Phone number is not valid. Format: (XXX) XXX-XXX");
+                alert("SỐ ĐIỆN THOẠI CÓ DẠNG: (XXX) XXX-XXX");
                 return false;
             }
 
-            // If all validations pass, submit the form
-            alert("Form submitted successfully!");
+            alert("bạn đã nhập đúng!");
             return true;
         }
 
-        // Function to check if the input matches the regular expression
         function StringMatch(txt, reg) {
             return reg.test(txt.value);
         }
 
-        // Function to check if any radio button is selected
         function notCheck(radio) {
             let isChecked = false;
             for (let i = 0; i < radio.length; i++) {
